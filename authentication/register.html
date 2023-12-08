@@ -6,21 +6,24 @@
     <title>Shopmate</title>
 </head>
 <body>
-    <div class="nav-bar">
+    <script type="module" src="register.js">
+
+      </script>
+    <div>
         Shopmate, Your Personalized Shopping Partner.
     </div>
     <div class="register-form">
-
-        <form action="">
+        <form>
             <label for="name">Name: </label>
             <input type="text">
             <label for="email">Email: </label>
-            <input type="email">
+            <input id="email" type="email">
             <label for="password">Password: </label>
-            <input type="password">
-            <button>Create account</button>
-        </form>
+            <input id="password" type="password">
+            <button id="create">Create account</button>
+            <p style="color: blue; cursor: pointer;" id="login_link" >Login</p>
 
+        </form>
     </div>
 </body>
 </html>

@@ -6,19 +6,20 @@
     <title>Shopmate</title>
 </head>
 <body>
+    <script type="module" src="login.js">
+      </script>
     <div class="nav-bar">
         Shopmate, Your Personalized Shopping Partner.
     </div>
     <div class="login-form">
-
         <form action="">
             <label for="email">Email: </label>
-            <input type="email">
-            <label for="password">Password: </label>
-            <input type="password">
-            <button>Login</button>
+            <input id="login_email" type="email">
+            <label  for="password">Password: </label>
+            <input id="login_password" type="password">
+            <button id="login_button">Login</button>
+            <p id="register_button" style="color: blue; cursor: pointer;" >Register</p>
         </form>
-
-    </div>
+    </div>  
 </body>
 </html>

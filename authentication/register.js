@@ -1,7 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,25 +21,24 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 // var ui = new firebaseui.auth.AuthUI(firebase.auth());
-// const auth = getAuth();
+import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js'
+import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
+const auth = getAuth();
 
-// Initialize Cloud Firestore and get a reference to the service
-const db = getFirestore(app);
-
-document.getElementById('add_item').addEventListener('click', function() {
-    return console.log(document.getElementById('category').value);
-    const shoppinglist = {
-        category: document.getElementById('category').value,
-        name: "Sprite",
-        price: 500,
-    };
-    async function sendData() {
-        await setDoc(doc(db, "shopping-list", "one"), shoppinglist);
-    
-    };
-    sendData().then((response)=> {
-        console.log(response);
-    }).catch((error) => {
-        console.log(error);
+document.getElementById('create').addEventListener('click', 
+function createUser(e) {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value
+    e.preventDefault()
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential)=> {
+        const user = userCredential.user;
+        console.log('Our user is: ', user);
+        window.location.replace("../body/index.html");
     })
+    
+})
+
+document.getElementById('login_link').addEventListener('click', function() {
+  window.location.replace("./login.html");
 })
