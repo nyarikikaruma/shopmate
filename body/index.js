@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
+import { getFirestore, doc, collection, addDoc, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -28,14 +28,14 @@ const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
 document.getElementById('add_item').addEventListener('click', function() {
-    return console.log(document.getElementById('category').value);
     const shoppinglist = {
         category: document.getElementById('category').value,
-        name: "Sprite",
-        price: 500,
+        name: document.getElementById('item_name').value,
+        price: document.getElementById('item_price').value,
     };
     async function sendData() {
-        await setDoc(doc(db, "shopping-list", "one"), shoppinglist);
+       return  await addDoc( collection(db, "shopping-list"), shoppinglist);
+        // await add(shoppingData, );
     
     };
     sendData().then((response)=> {
@@ -44,3 +44,14 @@ document.getElementById('add_item').addEventListener('click', function() {
         console.log(error);
     })
 })
+
+const list = collection(db, 'shopping-list');
+const querySnapshot = await getDocs(list);
+console.log(querySnapshot);
+querySnapshot.forEach((element) => {
+    const item =  element.data();
+    console.log('Name: ', item.name);
+    console.log('Category: ', item.category);
+    console.log('Price: ', item.price);
+    console.log(element.data());
+});
