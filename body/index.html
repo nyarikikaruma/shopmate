@@ -4,36 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopmate</title>
+    <style>
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height: 100vh; */
+        }
+        .home{
+            border-radius: 10px; /* Adjust the radius as needed */
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
+        }
+        .nav-bar{
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
     <script src="index.js" type="module">
 
     </script>
-    <div class="nav-bar">
-        <h2>
-            Shopmate, Your Personalized Shopping Partner.
-        </h2>
+        <div class="nav-bar">
+            <h2>
+                Shopmate, Your Personalized Shopping Partner.
+            </h2>
+        </div>
+    <div class="container">
+        <div class="home">
+            <div>
+                <label for="name">Name: </label>
+                <input type="text" name="name" id="item_name">
+                <label for="category">Category</label>
+                <select name="category" id="category">
+                    <option value="Drinks">Drinks</option>
+                    <option value="Vegetables">Vegetables</option>
+                    <option value="Cereals">Cereals</option>
+                    <option value="Clothes">Clothes</option>
+                    <option value="Shoes">Shoes</option>
+                </select>
+                <label for="price">Price: </label>
+                <input type="text" name="price" id="item_price">
+                <button id="add_item">Add item</button>
+            </div>
+            <div id="shoppinglist"></div>
+        </div>
     </div>
-    <div>
-        <label for="name">Name: </label>
-        <input type="text" name="name" id="item_name">
-        <label for="category">Category</label>
-        <select name="category" id="category">
-            <option value="Drinks">Drinks</option>
-            <option value="Vegetables">Vegetables</option>
-            <option value="Cereals">Cereals</option>
-            <option value="Clothes">Clothes</option>
-            <option value="Shoes">Shoes</option>
-        </select>
-        <label for="price">Price: </label>
-        <input type="text" name="price" id="item_price">
-        <button id="add_item">Add item</button>
-    </div>
-    <ul>
-        <li>Melon  $300</li>
-        <button>Remove</button>
-        <button>Edit</button>
-        <button>Check</button>
-    </ul>
 </body>
 </html>

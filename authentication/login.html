@@ -4,22 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopmate</title>
+    <style>
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height: 100vh; */
+        }
+        .login-form{
+            border-radius: 10px; /* Adjust the radius as needed */
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
+        }
+        .nav-bar{
+            display: flex;
+            /* align-items: center; */
+            justify-content: center;
+        }
+        /* Style for the form */
+        .form {
+            display: flex;
+            flex-direction: column;
+            max-width: 300px; /* Adjust the width as needed */
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        /* Style for labels */
+        label {
+            margin-bottom: 5px;
+        }
+
+        /* Style for inputs */
+        input[type="email"],
+        input[type="password"],
+        button {
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        /* Style for the Login button */
+        #login_button {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Style for the Register link */
+        #register_button {
+            margin-top: 5px;
+        }
+
+    </style>
 </head>
 <body>
     <script type="module" src="login.js">
       </script>
-    <div class="nav-bar">
+    <h3 class="nav-bar">
         Shopmate, Your Personalized Shopping Partner.
+    </h3>
+    <div class="container">
+        <div class="login-form">
+            <form class="form" action="">
+                <label for="email">Email: </label>
+                <input id="login_email" type="email">
+                <label  for="password">Password: </label>
+                <input id="login_password" type="password">
+                <button id="login_button">Login</button>
+                <p id="register_button" style="color: blue; cursor: pointer;" >Register</p>
+            </form>
+        </div>  
+
     </div>
-    <div class="login-form">
-        <form action="">
-            <label for="email">Email: </label>
-            <input id="login_email" type="email">
-            <label  for="password">Password: </label>
-            <input id="login_password" type="password">
-            <button id="login_button">Login</button>
-            <p id="register_button" style="color: blue; cursor: pointer;" >Register</p>
-        </form>
-    </div>  
 </body>
 </html>

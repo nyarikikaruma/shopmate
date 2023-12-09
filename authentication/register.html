@@ -4,26 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopmate</title>
+    <style>
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height: 100vh; */
+        }
+        .register-form{
+            border-radius: 10px; /* Adjust the radius as needed */
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
+        }
+        .nav-bar{
+            display: flex;
+            /* align-items: center; */
+            justify-content: center;
+        }
+        /* Style for the form */
+        .form {
+            display: flex;
+            flex-direction: column;
+            max-width: 300px; /* Adjust the width as needed */
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        /* Style for labels */
+        label {
+            margin-bottom: 5px;
+        }
+
+        /* Style for inputs */
+        input[type="email"],
+        input[type="password"],
+        input[name="name"],
+        button {
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        /* Style for the Login button */
+        #create {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Style for the Register link */
+        #login_link {
+            margin-top: 5px;
+        }
+
+    </style>
 </head>
 <body>
     <script type="module" src="register.js">
 
       </script>
-    <div>
+    <h3 class="nav-bar">
         Shopmate, Your Personalized Shopping Partner.
-    </div>
-    <div class="register-form">
-        <form>
-            <label for="name">Name: </label>
-            <input type="text">
-            <label for="email">Email: </label>
-            <input id="email" type="email">
-            <label for="password">Password: </label>
-            <input id="password" type="password">
-            <button id="create">Create account</button>
-            <p style="color: blue; cursor: pointer;" id="login_link" >Login</p>
-
-        </form>
+    </h3>
+    <div class="container">
+        <div class="register-form">
+            <form class="form">
+                <label for="name">Name: </label>
+                <input name="name" type="text">
+                <label for="email">Email: </label>
+                <input id="email" type="email">
+                <label for="password">Password: </label>
+                <input id="password" type="password">
+                <button id="create">Create account</button>
+                <p style="color: blue; cursor: pointer;" id="login_link" >Login</p>
+    
+            </form>
+        </div>
     </div>
 </body>
 </html>
