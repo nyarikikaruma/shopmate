@@ -7,15 +7,14 @@ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyClGGqy8prgzumRWYRm6VvjhtwVnJQUoiM",
-    authDomain: "shoppinglist-56031.firebaseapp.com",
-    projectId: "shoppinglist-56031",
-    storageBucket: "shoppinglist-56031.appspot.com",
-    messagingSenderId: "357876634666",
-    appId: "1:357876634666:web:c8e60b370148a794d8df53",
-    measurementId: "G-M01H44DM6G"
+  apiKey: "AIzaSyCVCKwANupjvKowJWH1wgh2FUUTvNLcwdE",
+  authDomain: "shoppinglist1-69278.firebaseapp.com",
+  projectId: "shoppinglist1-69278",
+  storageBucket: "shoppinglist1-69278.appspot.com",
+  messagingSenderId: "267397778410",
+  appId: "1:267397778410:web:308432cfe2d8f2524b0093",
+  measurementId: "G-X74WRY5CFN"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
@@ -33,8 +32,9 @@ document.getElementById('login_button').addEventListener('click', function(e) {
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
+        const currentUser = auth.currentUser;
+        localStorage.setItem('user_id', currentUser.uid)
         // ...
-        console.log(user);
         window.location.replace("../body/index.html");
       })
       .catch((error) => {

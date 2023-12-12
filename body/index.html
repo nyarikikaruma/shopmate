@@ -21,6 +21,41 @@
             display: flex;
             justify-content: center;
         }
+        .logout-btn {
+            position: fixed;
+            right: 20px; /* Adjust the distance from the left edge */
+            top: 50px; /* Adjust the distance from the top edge */
+            padding: 5px 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            }
+            /* Hover effect */
+            .logout-btn:hover {
+            background-color: #d32f2f;
+            }
+            .user_profile{
+                position: fixed;
+                right: 20px;
+                top: 10px;
+            }
+            /* #item_name,  #item_price{
+                color: white;
+                padding: 5px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                border-radius: 12px;
+            }
+            #item_price{
+
+            } */
+
     </style>
 </head>
 <body>
@@ -31,6 +66,12 @@
             <h2>
                 Shopmate, Your Personalized Shopping Partner.
             </h2>
+        </div>
+        <div class="user_profile">
+            <!-- <h3>
+                James Mwaura
+            </h3> -->
+            <button id="logout" class="logout-btn">Log out</button>
         </div>
     <div class="container">
         <div class="home">
