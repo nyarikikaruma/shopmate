@@ -18,18 +18,24 @@ const firebaseConfig = {
     measurementId: "G-X74WRY5CFN"
   };
 
-// Initialize Firebase
+// Initialize Firebase app with the provided configuration
 const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase Analytics
 const analytics = getAnalytics(app);
+
+// Get the authentication instance
 const auth = getAuth();
 
-
+// Check for authentication state changes
 onAuthStateChanged(auth, (user)=> {
     if(user) {
+        // If user is authenticated, store user ID in local storage
         localStorage.setItem('user_id', user.uid)
         console.log(user.uid);
     }
     else{
+        // If user is not authenticated, alert and redirect to login page
         alert('You are not Logged in!')
         window.location.replace("../authentication/login.html");
     }
@@ -38,6 +44,7 @@ onAuthStateChanged(auth, (user)=> {
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
+// Event listener for adding items to the shopping list
 document.getElementById('add_item').addEventListener('click', function() {
     const shoppinglist = {
         category: document.getElementById('category').value,
