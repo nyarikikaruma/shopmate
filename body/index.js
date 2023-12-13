@@ -22,9 +22,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth();
-const user = auth.auth().currentUser;
 
-console.log('Logged in user is: ', user);
 
 onAuthStateChanged(auth, (user)=> {
     if(user) {
@@ -32,8 +30,8 @@ onAuthStateChanged(auth, (user)=> {
         console.log(user.uid);
     }
     else{
-        alert('You are not registered!')
-        window.location.replace("../authentication/register.html");
+        alert('You are not Logged in!')
+        window.location.replace("../authentication/login.html");
     }
 })
 
@@ -74,6 +72,11 @@ async function fetchShoppingList() {
     let veges = []
     let clothes = []
     let cereals = []
+    let drinksId = ''
+    let shoesId = ''
+    let vegesId = ''
+    let clothesId = ''
+    let cerealsId = ''
     const itemDiv = document.createElement('div');
     if(querySnapshot.docs.length === 0) {
         const noItemDiv = document.createElement('div')
@@ -84,60 +87,88 @@ async function fetchShoppingList() {
         const item =  element.data();
         if(item.category === 'Clothes') {
             clothes.push(item)
+            clothesId = element.id
         }
         if(item.category === 'Drinks') {
             drinks.push(item)
+            drinksId = element.id
         }
         if(item.category === 'Shoes') {
             shoes.push(item)
+            shoesId = element.id
         }
         if(item.category === 'Vegetables') {
             veges.push(item)
+            vegesId = element.id
         }
         if(item.category === 'Cereals') {
             cereals.push(item)
+            cerealsId = element.id
         }
     });
 
-        function shoppingList(list, listName) {
+        function shoppingList(list, listName, documentId) {
             itemDiv.insertAdjacentHTML('beforeend', `<h3>${listName}</h3>`)
             document.getElementById('shoppinglist').appendChild(itemDiv)
             list.forEach(element => {
+                console.log('Item id is: ', element);
                 itemDiv.insertAdjacentHTML('beforeend', 
-                `<p>${element.name} Price $: ${element.price}</p>
-                <button id="delete">Delete</button>
-                <button id="check">Check item</button>`
+
+                `<div style="display: flex; justify-content: space-between">
+                <div style=" display: flex; align-items: center; border-radius: 5px; border: 1px solid #ddd; padding: 10px; margin: 3px">
+                <input type="checkbox" style="margin-right: 10px;" />
+                <p style="margin: 0; font-family: Arial, sans-serif; font-size: 16px;">${element.name} Price $: ${element.price}</p>
+                </div>
+                <button
+                    value="${documentId}"
+                    id="delete"
+                    style="
+                    background-color: #4CAF50;
+                    color: white;
+                    border-radius: 5px;
+                    border: 1px solid #ddd;
+                    font-weight: bold;
+                    ">
+                    Delete
+                </button>
+                </div>
+                <hr style="background-color: #4CAF50">
+              
+                `
                 )
                 document.getElementById('shoppinglist').appendChild(itemDiv)
             });
         }
         if(drinks.length > 0) {
-            shoppingList(drinks, 'Drinks');
+            shoppingList(drinks, 'Drinks', drinksId);
         }
         if(shoes.length > 0) {
-            shoppingList(shoes, 'Shoes')
+            shoppingList(shoes, 'Shoes', shoesId)
         }
         if(veges.length > 0) {
-            shoppingList(veges, 'Vegetables')
+            shoppingList(veges, 'Vegetables', vegesId)
         }
         if(clothes.length > 0) {
-            shoppingList(clothes, 'Clothes')
+            shoppingList(clothes, 'Clothes', clothesId)
         }
         if(cereals.length > 0) {
-            shoppingList(cereals, 'Cereals')
+            shoppingList(cereals, 'Cereals', cerealsId)
         }
 
-        itemDiv.addEventListener('click', function(e){
+        itemDiv.addEventListener('click', async function(e){
             if(e.target.matches('#delete')){
-                console.log('Item deleted successfully!');
+                const buttonValue = e.target.value; // Accessing the value attribute of the clicked button
+
+                const docRef = doc(db, 'shopping-list', buttonValue)
+                await deleteDoc(docRef).then((response) => {
+                    console.log(response);
+                    console.log('Document deleted, successfully!');
+                    location.reload()
+                }).catch(error => {
+                    console.log('Document could not be deleted, ', error);
+                })
             }
         })
-        itemDiv.addEventListener('click', function(e){
-            if(e.target.matches('#check')){
-                console.log('Item checked successfully successfully!');
-            }
-        })
-    
 }
 fetchShoppingList()
 
@@ -151,13 +182,4 @@ document.getElementById('logout').addEventListener('click', function(){
     });
     localStorage.removeItem('user_id')
     window.location.replace("../authentication/login.html");
-})
-
-document.getElementById('delete').addEventListener('click', function() {
-    async function deleteItem(id) {
-        console.log('Item clicked!');
-        const itemsDelete = query(collection(db, 'shopping-list'), where('id', '==', id));
-        console.log('Item to delete is: ', itemsDelete);
-        await deleteDoc(doc(db, "shopping-list"), where('id'));
-    }
 })
