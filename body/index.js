@@ -3,11 +3,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 import { getFirestore, deleteDoc, doc, collection, addDoc, query, where, getDocs, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js'
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: "AIzaSyCVCKwANupjvKowJWH1wgh2FUUTvNLcwdE",
     authDomain: "shoppinglist1-69278.firebaseapp.com",
@@ -32,7 +29,6 @@ onAuthStateChanged(auth, (user)=> {
     if(user) {
         // If user is authenticated, store user ID in local storage
         localStorage.setItem('user_id', user.uid)
-        console.log(user.uid);
     }
     else{
         // If user is not authenticated, alert and redirect to login page
@@ -46,22 +42,25 @@ const db = getFirestore(app);
 
 // Event listener for adding items to the shopping list
 document.getElementById('add_item').addEventListener('click', function() {
+    // Gather item details from the input fields
     const shoppinglist = {
         category: document.getElementById('category').value,
         name: document.getElementById('item_name').value,
         price: document.getElementById('item_price').value,
         uid: localStorage.getItem('user_id')
     };
+    // Asynchronously add the item to the 'shopping-list' collection in Firestore
     async function sendData() {
        return  await addDoc( collection(db, "shopping-list"), shoppinglist);
-        // await add(shoppingData, );
     
     };
+    // Process the asynchronous addition of the item
     sendData().then((response)=> {
         console.log(response);
     }).catch((error) => {
         console.log(error);
     });
+    // Clear input fields and refresh shopping list
     const listElement = document.getElementById('shoppinglist').firstChild;
     if(listElement) {
         listElement.remove()
@@ -71,9 +70,13 @@ document.getElementById('add_item').addEventListener('click', function() {
     document.getElementById('item_price').value = ''
 })
 
+// Asynchronously fetch and display the shopping list items
 async function fetchShoppingList() {
+    // Construct a query to get items belonging to the current user
     const list = query(collection(db, 'shopping-list'), where('uid', '==', localStorage.getItem('user_id')));
     const querySnapshot = await getDocs(list);
+    // Arrays to store items categorized by type
+    // Also, variables to store document IDs for each category
     let drinks = []
     let shoes = []
     let veges = []
@@ -84,12 +87,15 @@ async function fetchShoppingList() {
     let vegesId = ''
     let clothesId = ''
     let cerealsId = ''
+    // Create a div to display items
     const itemDiv = document.createElement('div');
+    // Check if there are no items in the shopping list
     if(querySnapshot.docs.length === 0) {
         const noItemDiv = document.createElement('div')
         noItemDiv.innerHTML = '<p>No Items in your list. Please add items above!</p>';
         document.getElementById('shoppinglist').appendChild(noItemDiv)
     }
+    // Iterate through the fetched items and categorize them
     querySnapshot.forEach((element) => {
         const item =  element.data();
         if(item.category === 'Clothes') {
@@ -114,11 +120,13 @@ async function fetchShoppingList() {
         }
     });
 
+    // Function to display items of a particular category
         function shoppingList(list, listName, documentId) {
+            // Add category header to the item div
             itemDiv.insertAdjacentHTML('beforeend', `<h3>${listName}</h3>`)
             document.getElementById('shoppinglist').appendChild(itemDiv)
+            // Iterate through items and display them with delete buttons
             list.forEach(element => {
-                console.log('Item id is: ', element);
                 itemDiv.insertAdjacentHTML('beforeend', 
 
                 `<div style="display: flex; justify-content: space-between">
@@ -135,6 +143,7 @@ async function fetchShoppingList() {
                     border-radius: 5px;
                     border: 1px solid #ddd;
                     font-weight: bold;
+                    cursor: pointer;
                     ">
                     Delete
                 </button>
@@ -146,6 +155,8 @@ async function fetchShoppingList() {
                 document.getElementById('shoppinglist').appendChild(itemDiv)
             });
         }
+
+        // Display items for each category if items exist
         if(drinks.length > 0) {
             shoppingList(drinks, 'Drinks', drinksId);
         }
@@ -162,11 +173,13 @@ async function fetchShoppingList() {
             shoppingList(cereals, 'Cereals', cerealsId)
         }
 
+        // Event listener for delete buttons on items
         itemDiv.addEventListener('click', async function(e){
             if(e.target.matches('#delete')){
                 const buttonValue = e.target.value; // Accessing the value attribute of the clicked button
 
                 const docRef = doc(db, 'shopping-list', buttonValue)
+                // Delete the selected document/item
                 await deleteDoc(docRef).then((response) => {
                     console.log(response);
                     console.log('Document deleted, successfully!');
@@ -177,16 +190,19 @@ async function fetchShoppingList() {
             }
         })
 }
+// Fetch the shopping list on page load
 fetchShoppingList()
 
-
+// Event listener for logging out
 document.getElementById('logout').addEventListener('click', function(){
     const auth = getAuth();
+    // Sign out the user
     signOut(auth).then(() => {
       alert('Sign-out successful.')
     }).catch((error) => {
         console.log(error);
     });
+    // Remove user ID from local storage and redirect to login page
     localStorage.removeItem('user_id')
     window.location.replace("../authentication/login.html");
 })

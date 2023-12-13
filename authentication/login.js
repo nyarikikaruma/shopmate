@@ -1,11 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
+import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js'
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCVCKwANupjvKowJWH1wgh2FUUTvNLcwdE",
   authDomain: "shoppinglist1-69278.firebaseapp.com",
@@ -18,12 +15,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
-// var ui = new firebaseui.auth.AuthUI(firebase.auth());
-import { getAuth, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js'
-import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
+// Get authentication instance
 const auth = getAuth();
 
+// Event listener for login button click
 document.getElementById('login_button').addEventListener('click', function(e) {
     e.preventDefault();
     const email = document.getElementById('login_email').value;
@@ -37,13 +32,17 @@ document.getElementById('login_button').addEventListener('click', function(e) {
         // ...
         window.location.replace("../body/index.html");
       })
+       // Handle sign-in errors
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage);
+        console.log(errorMessage);// Log error message
+
       });
 
 })
+
+// Event listener for register button click
 document.getElementById('register_button').addEventListener('click', function() {
   window.location.replace("./register.html");
 })

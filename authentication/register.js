@@ -2,12 +2,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js'
-import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
-// TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCVCKwANupjvKowJWH1wgh2FUUTvNLcwdE",
   authDomain: "shoppinglist1-69278.firebaseapp.com",
@@ -24,6 +21,7 @@ const analytics = getAnalytics(app);
 // var ui = new firebaseui.auth.AuthUI(firebase.auth());
 const auth = getAuth();
 
+// Listen to register button click and Register user.
 document.getElementById('create').addEventListener('click', 
 function createUser(e) {
     const email = document.getElementById('email').value;
@@ -38,6 +36,7 @@ function createUser(e) {
     
 })
 
+// Navigate to login form on login link click
 document.getElementById('login_link').addEventListener('click', function() {
   window.location.replace("./login.html");
 })
