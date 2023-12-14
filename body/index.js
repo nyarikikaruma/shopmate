@@ -185,7 +185,7 @@ async function fetchShoppingList() {
                     console.log('Document deleted, successfully!');
                     location.reload()
                 }).catch(error => {
-                    console.log('Document could not be deleted, ', error);
+                    console.log('Document could not be deleted.', error);
                 })
             }
         })
