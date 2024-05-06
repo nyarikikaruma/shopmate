@@ -33,7 +33,7 @@ onAuthStateChanged(auth, (user)=> {
     else{
         // If user is not authenticated, alert and redirect to login page
         alert('You are not Logged in!')
-        window.location.replace("../authentication/login.html");
+        window.location.replace("../login.html");
     }
 })
 
@@ -204,5 +204,5 @@ document.getElementById('logout').addEventListener('click', function(){
     });
     // Remove user ID from local storage and redirect to login page
     localStorage.removeItem('user_id')
-    window.location.replace("../authentication/login.html");
+    window.location.replace("../login.html");
 })
